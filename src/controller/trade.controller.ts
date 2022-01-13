@@ -45,4 +45,17 @@ router.get("/articles", async (req, res) => {
   return res.status(200).json(articles);
 });
 
+router.get("/articles/:articlesId", async (req, res) => {
+  const { articlesId } = req.params;
+  if (!articlesId) {
+    return res.status(400).json();
+  }
+  const articleIdNumber = parseInt(articlesId, 10);
+  const article = await Article.findByPk(articleIdNumber);
+  if (!article) {
+    return res.status(404).json();
+  }
+  return res.status(200).json(article);
+});
+
 export default router;
